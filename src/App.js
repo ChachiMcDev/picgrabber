@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+
+import ImageList from './Components/ImageList'
+import searchImages from './api'
+import SearchBar from './Components/SearchBar';
+
 
 function App() {
+  const [data, setData] = useState('')
+
+  const handleSubmit = async (term) => {
+    const data = await searchImages(term)
+
+    setData(data)
+
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchBar onSubmit={handleSubmit} />
+
+      <ImageList images={data} />
     </div>
   );
 }
